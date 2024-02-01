@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Client</string>
+    <string name="TitreMainPage">Titre / Nom de l\'application / du club</string>
+    <string name="descriptionMainPage">Description de l\'application (bla bla)</string>
 </resources>

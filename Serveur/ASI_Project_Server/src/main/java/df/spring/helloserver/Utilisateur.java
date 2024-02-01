@@ -1,18 +1,11 @@
 package df.spring.helloserver;
 
 import jakarta.persistence.*;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.repository.query.FluentQuery;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.function.Function;
+import java.util.*;
 
 @Entity
-public class Utilisateur implements UtilisateurRepository {
+public class Utilisateur {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -20,201 +13,106 @@ public class Utilisateur implements UtilisateurRepository {
     @Column(nullable = false)
     private String nom;
     @Column(nullable = false)
-    private int age;
+    private String prenom;
+    @Column(nullable = false)
+    private GregorianCalendar birthday;
+    @Column(nullable = false)
+    private String adresse;
+    @Column(nullable = false)
+    private String mail;
+    @Column(nullable = false)
+    private String password;
+    @Column(nullable = false)
+    private Boolean isProfessor;
 
-    public Utilisateur(String nom, int age, int id){
+    public Utilisateur() {
+    }
+
+    public Utilisateur(int id, String nom, String prenom, GregorianCalendar birthday, String adresse, String mail, String password, Boolean isProfessor) {
         this.id = id;
-        this.age = age;
         this.nom = nom;
+        this.prenom = prenom;
+        this.birthday = birthday;
+        this.adresse = adresse;
+        this.mail = mail;
+        this.password = password;
+        this.isProfessor = isProfessor;
     }
 
-    public Utilisateur() {}
 
-
-    public String toString(){
-       return "Utilisateur : "+id+" "+nom+" "+age+" ans";
+    public String toString() {
+        return "Utilisateur : " + id +
+                " " + nom +
+                " " + prenom +
+                " " + birthday.getTime() +
+                " " + adresse +
+                " " + mail +
+                " " + password +
+                " " + isProfessor;
     }
+
     public int getId() {
         return id;
-    }
-
-    public String getNom() {
-        return nom;
-    }
-
-    public int getAge() {
-        return age;
     }
 
     public void setId(int id) {
         this.id = id;
     }
 
+    public String getNom() {
+        return nom;
+    }
+
     public void setNom(String nom) {
         this.nom = nom;
     }
 
-    public void setAge(int age) {
-        this.age = age;
+    public String getPrenom() {
+        return prenom;
     }
 
-    @Override
-    public List<Utilisateur> findByNom(String nom) {
-        return null;
+    public void setPrenom(String prenom) {
+        this.prenom = prenom;
     }
 
-    @Override
-    public Optional<Utilisateur> findById(int id) {
-        return null;
+    public GregorianCalendar getBirthday() {
+        return birthday;
     }
 
-    @Override
-    public void flush() {
-
+    public void setBirthday(GregorianCalendar birthday) {
+        this.birthday = birthday;
     }
 
-    @Override
-    public <S extends Utilisateur> S saveAndFlush(S entity) {
-        return null;
+    public String getAdresse() {
+        return adresse;
     }
 
-    @Override
-    public <S extends Utilisateur> List<S> saveAllAndFlush(Iterable<S> entities) {
-        return null;
+    public void setAdresse(String adresse) {
+        this.adresse = adresse;
     }
 
-    @Override
-    public void deleteAllInBatch(Iterable<Utilisateur> entities) {
-
+    public String getMail() {
+        return mail;
     }
 
-    @Override
-    public void deleteAllByIdInBatch(Iterable<Integer> integers) {
-
+    public void setMail(String mail) {
+        this.mail = mail;
     }
 
-    @Override
-    public void deleteAllInBatch() {
-
+    public String getPassword() {
+        return password;
     }
 
-    @Override
-    public Utilisateur getOne(Integer integer) {
-        return null;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    @Override
-    public Utilisateur getById(Integer integer) {
-        return null;
+    public Boolean getProfessor() {
+        return isProfessor;
     }
 
-    @Override
-    public Utilisateur getReferenceById(Integer integer) {
-        return null;
-    }
-
-    @Override
-    public <S extends Utilisateur> Optional<S> findOne(Example<S> example) {
-        return Optional.empty();
-    }
-
-    @Override
-    public <S extends Utilisateur> List<S> findAll(Example<S> example) {
-        return null;
-    }
-
-    @Override
-    public <S extends Utilisateur> List<S> findAll(Example<S> example, Sort sort) {
-        return null;
-    }
-
-    @Override
-    public <S extends Utilisateur> Page<S> findAll(Example<S> example, Pageable pageable) {
-        return null;
-    }
-
-    @Override
-    public <S extends Utilisateur> long count(Example<S> example) {
-        return 0;
-    }
-
-    @Override
-    public <S extends Utilisateur> boolean exists(Example<S> example) {
-        return false;
-    }
-
-    @Override
-    public <S extends Utilisateur, R> R findBy(Example<S> example, Function<FluentQuery.FetchableFluentQuery<S>, R> queryFunction) {
-        return null;
-    }
-
-    @Override
-    public <S extends Utilisateur> S save(S entity) {
-        return null;
-    }
-
-    @Override
-    public <S extends Utilisateur> List<S> saveAll(Iterable<S> entities) {
-        return null;
-    }
-
-    @Override
-    public Optional<Utilisateur> findById(Integer integer) {
-        return Optional.empty();
-    }
-
-    @Override
-    public boolean existsById(Integer integer) {
-        return false;
-    }
-
-    @Override
-    public List<Utilisateur> findAll() {
-        return null;
-    }
-
-    @Override
-    public List<Utilisateur> findAllById(Iterable<Integer> integers) {
-        return null;
-    }
-
-    @Override
-    public long count() {
-        return 0;
-    }
-
-    @Override
-    public void deleteById(Integer integer) {
-
-    }
-
-    @Override
-    public void delete(Utilisateur entity) {
-
-    }
-
-    @Override
-    public void deleteAllById(Iterable<? extends Integer> integers) {
-
-    }
-
-    @Override
-    public void deleteAll(Iterable<? extends Utilisateur> entities) {
-
-    }
-
-    @Override
-    public void deleteAll() {
-
-    }
-
-    @Override
-    public List<Utilisateur> findAll(Sort sort) {
-        return null;
-    }
-
-    @Override
-    public Page<Utilisateur> findAll(Pageable pageable) {
-        return null;
+    public void setProfessor(Boolean professor) {
+        isProfessor = professor;
     }
 }
+

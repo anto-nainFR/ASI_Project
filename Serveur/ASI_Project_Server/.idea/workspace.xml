@@ -5,8 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b29acb47-2a08-4a6d-97b6-5f3e29a7e174" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../../Client/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../Client/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Client/app/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/../../Client/app/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Client/app/src/main/java/com/example/client/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Client/app/src/main/java/com/example/client/MainActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Client/app/src/main/res/layout/connexion.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../Client/app/src/main/res/layout/connexion.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/df/spring/helloserver/Hello.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/df/spring/helloserver/Hello.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/df/spring/helloserver/HelloWorld.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/df/spring/helloserver/HelloWorld.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/df/spring/helloserver/Utilisateur.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/df/spring/helloserver/Utilisateur.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/df/spring/helloserver/UtilisateurRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/df/spring/helloserver/UtilisateurRepository.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -85,7 +92,7 @@
       <option name="presentableId" value="Default" />
       <updated>1706708189918</updated>
       <workItem from="1706708190972" duration="9608000" />
-      <workItem from="1706792945338" duration="1267000" />
+      <workItem from="1706792945338" duration="14006000" />
     </task>
     <servers />
   </component>

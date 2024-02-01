@@ -2,6 +2,8 @@ package df.spring.helloserver;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.data.repository.query.Param;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,6 +44,7 @@ public class Hello {
         this.utilisateurRepository = utilisateurRepository;
     }
 
+/*
     @GetMapping("/{userId}")
     public String getUserById(@PathVariable int userId) {
         Optional<Utilisateur> utilisateurOptional = utilisateurRepository.findById(userId);
@@ -52,13 +57,23 @@ public class Hello {
     public String getAllUsers(){
         List<Utilisateur> utilisateurOptional = utilisateurRepository.findAll();
 
-        String text = "<!DOCTYPE html><html lang=\"en\"<head><meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"><title>User List</title></head><body><h1>User List</h1><table border=\"1\"><thead><tr><th>ID</th><th>Name</th><th>Age</th></tr></thead><tbody>";
+        String text = "<!DOCTYPE html><html lang=\"en\"<head><meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"><title>User List</title></head><body><h1>User List</h1><table border=\"1\"><thead><tr><th>ID</th><th>Name</th><th>Prenom</th><th>Date de naissance</th><th>Adresse</th><th>Mail</th><th>Password</th><th>isProfesseur</th></tr></thead><tbody>";
         for (Utilisateur user: utilisateurOptional) {
-            text += "<tr><td>" + user.getId()+"</td><td>" + user.getNom()+"</td><td>" + user.getAge()+"</td></tr>";
+            text += "<tr>" +
+                        "<td>" + user.getId()+"</td>" +
+                        "<td>" + user.getNom()+"</td>" +
+                        "<td>" + user.getPrenom() +"</td>" +
+                        "<td>" + user.getBirthday().getTime() + "</td>" +
+                        "<td>" + user.getAdresse() + "</td>" +
+                        "<td>" + user.getMail() + "</td>" +
+                        "<td>" + user.getPassword() + "</td>" +
+                        "<td>" + user.getProfessor() + "</td>" +
+                    "</tr>";
         }
         text += "</table></body></html>";
         return text;
     }
+    */
 }
 
 

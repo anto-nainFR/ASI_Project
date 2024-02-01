@@ -80,7 +80,8 @@
         android:text="Je suis professeur"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonEleve" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonEleve"
+        android:onClick="test"/>
 
     <Button
         android:id="@+id/retourVersAccueil"
@@ -93,7 +94,7 @@
         app:layout_constraintHorizontal_bias="0.948"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonProf"
-        android:onClick="retourConnexionToAccueil"/>
+        android:onClick="retourConnexionToAccueil" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

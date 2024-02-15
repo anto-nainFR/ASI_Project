@@ -1,6 +1,12 @@
 package com.example.client;
 
+import android.icu.util.LocaleData;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Locale;
 
 public class Utilisateur {
 
@@ -30,8 +36,7 @@ public class Utilisateur {
 
 
     // ======================================= TEMPORAIRE ===========================================
-    public Utilisateur(String chaine){
-        System.out.println(chaine);
+    public Utilisateur(String chaine) {
         String string = chaine;
 
         // nom
@@ -54,7 +59,17 @@ public class Utilisateur {
             index = string.indexOf("\"") + 1;
             string = string.substring(index);
             index = string.indexOf("\"");
-            //birthday =  new GregorianCalendar(string.substring(0,index));
+            String tmp = string.substring(0,index);
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX",Locale.FRANCE);
+            try {
+                Date date = sdf.parse(tmp);
+                birthday = new GregorianCalendar();
+                assert date != null;
+                birthday.setTime(date);
+            }catch (ParseException e){
+                e.printStackTrace();
+            }
+
         //adresse
             index = string.indexOf("adresse") + "adresse".length() + 1;
             string = string.substring(index);
@@ -77,11 +92,24 @@ public class Utilisateur {
             index = string.indexOf("\"");
             password = string.substring(0,index);
         //isProfessor
+            index = string.indexOf("professor") + ("professor").length() + 4;
+            string = string.substring(index);
+            index = string.indexOf(",");
+
+            tmp = string.substring(0,index);
+            if (tmp.equals("true")) isProfessor = true;
+            else isProfessor = false;
         //id
+            index = string.indexOf("http://10.0.2.2:8080/utilisateurs/") + ("http://10.0.2.2:8080/utilisateurs/").length();
+            string = string.substring(index);
+            index = string.indexOf("\"");
+            tmp = string.substring(0,index);
+            id = Integer.valueOf(tmp);
 
 
 
-        System.out.println(string);
+        System.out.println("\n"+string+"\n\n");
+        this.toString();
 
     }
 
@@ -150,10 +178,13 @@ public class Utilisateur {
     }
 
     public String toString() {
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd",Locale.FRANCE);
+
         return "Utilisateur : " + id +
                 " " + nom +
                 " " + prenom +
-                " " + birthday +
+                " " + sdf.format(birthday.getTime()) +
                 " " + adresse +
                 " " + mail +
                 " " + password +

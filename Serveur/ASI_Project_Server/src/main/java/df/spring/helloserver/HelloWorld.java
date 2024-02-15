@@ -8,7 +8,6 @@ import org.springframework.context.annotation.Bean;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.List;
 
 @SpringBootApplication
 public class HelloWorld {
@@ -27,6 +26,9 @@ public class HelloWorld {
         listUsers.add(new Utilisateur(2,"Jeu....","Malo",new GregorianCalendar(2000, Calendar.JANUARY,1), "2 rue du petit caillou Amiens", "Malo@gmail.com", "password",Boolean.TRUE));
         listUsers.add(new Utilisateur(3,"Vig....","Tanguy",new GregorianCalendar(2000, Calendar.JANUARY,1), "3 rue du petit caillou Amiens", "Tanguy@gmail.com", "password",Boolean.FALSE));
 
+        listUsers.add(new Utilisateur("Test1....","Ahah",new GregorianCalendar(2000, Calendar.JANUARY,1), "petite rue", "test1@gmail.com", "mdp",Boolean.FALSE));
+        listUsers.add(new Utilisateur("Test2....","Eheh",new GregorianCalendar(2000, Calendar.JANUARY,1), "grosse rue", "test2@gmail.com", "mdp",Boolean.FALSE));
+
         listCours.add(new Cours(1,new GregorianCalendar(2024, Calendar.FEBRUARY,15),"Cours de plongée","Natation","Piscine municipale",30,listUsers.get(1)));
         listCours.add(new Cours(2,new GregorianCalendar(2024, Calendar.MARCH,1),"Cours d'apnée","Natation","Piscine municipale",5,listUsers.get(1)));
 
@@ -36,18 +38,12 @@ public class HelloWorld {
             repoUsers.save(listUsers.get(1));
             repoUsers.save(listUsers.get(2));
 
+            repoUsers.save(listUsers.get(3));
+            repoUsers.save(listUsers.get(4));
+
             // rajouter quelques cours
             repoCours.save(listCours.get(0));
             repoCours.save(listCours.get(1));
         };
     }
 }
-
-/*
-    pour pouvoir voir les users un par un
-
-
-
-
-
- */

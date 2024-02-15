@@ -6,7 +6,7 @@ import java.util.*;
 
 @Entity
 public class Utilisateur {
-
+    private static int cpt = 3;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
@@ -30,6 +30,17 @@ public class Utilisateur {
 
     public Utilisateur(int id, String nom, String prenom, GregorianCalendar birthday, String adresse, String mail, String password, Boolean isProfessor) {
         this.id = id;
+        this.nom = nom;
+        this.prenom = prenom;
+        this.birthday = birthday;
+        this.adresse = adresse;
+        this.mail = mail;
+        this.password = password;
+        this.isProfessor = isProfessor;
+    }
+
+    public Utilisateur(String nom, String prenom, GregorianCalendar birthday, String adresse, String mail, String password, Boolean isProfessor) {
+        this.id = cpt++;
         this.nom = nom;
         this.prenom = prenom;
         this.birthday = birthday;

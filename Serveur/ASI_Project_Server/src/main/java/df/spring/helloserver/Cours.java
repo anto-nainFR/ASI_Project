@@ -7,6 +7,8 @@ import java.util.GregorianCalendar;
 @Entity
 public class Cours {
 
+    private static int cpt = 3;
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
@@ -27,6 +29,15 @@ public class Cours {
 
     public Cours(int id, GregorianCalendar date, String nom, String sport, String lieu, int nbPlace, Utilisateur prof) {
         this.id = id;
+        this.date = date;
+        this.nom = nom;
+        this.sport = sport;
+        this.lieu = lieu;
+        this.nbPlace = nbPlace;
+        this.prof = prof;
+    }
+    public Cours(GregorianCalendar date, String nom, String sport, String lieu, int nbPlace, Utilisateur prof) {
+        this.id = cpt++;
         this.date = date;
         this.nom = nom;
         this.sport = sport;

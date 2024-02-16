@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
 import android.icu.util.Calendar;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
@@ -14,21 +13,16 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
-import com.owlike.genson.Genson;
-
-import org.w3c.dom.Text;
-
-import java.io.BufferedInputStream;
+import com.google.android.material.snackbar.Snackbar;
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Locale;
-import java.util.Scanner;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -261,7 +255,6 @@ public class MainActivity extends AppCompatActivity {
     EditText eText;
     Button btnGet;
     TextView tvw;
-
     TimePicker timePicker;
 
     public void ajoutCoursPage(View view){
@@ -293,7 +286,78 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    public void ajouterCoursBDD(View view){
+        EditText tmp;
+        TimePicker tp;
+        String nom, sport, adresse;
+        int nbPlace, heure, minute;
+        Date date;
 
+        try {
+            tmp = findViewById(R.id.EditText);
+            nom = tmp.getText().toString();
+
+            tmp = findViewById(R.id.editText2);
+            sport = tmp.getText().toString();
+
+            tmp = findViewById(R.id.editText3);
+            adresse = tmp.getText().toString();
+
+            tmp = findViewById(R.id.editText4);
+            nbPlace = Integer.parseInt(tmp.getText().toString());
+
+            DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy",Locale.FRANCE);
+            tmp = findViewById(R.id.editText5);
+            date = formatter.parse(tmp.getText().toString());
+
+            tp = findViewById(R.id.datePicker1);
+            heure = tp.getHour();
+            minute = tp.getMinute();
+
+            date.setHours(heure);
+            date.setMinutes(minute);
+
+            Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content),"Le cours a bien été créé !",Snackbar.LENGTH_SHORT);
+            snackbar.show();
+
+
+
+            Thread thread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        String url = "http://10.0.2.2:8080/home/ajout/"+nom+"/"+sport+"/"+adresse+"/"+nbPlace+"/"+date.getTime()+"/"+user.getId()+"\n";
+                        URL obj = new URL(url);
+                        HttpURLConnection con  =(HttpURLConnection) obj.openConnection();
+                        con.setRequestMethod("GET");
+
+                        int responseCode = con.getResponseCode();
+                        System.out.println("Code de réponse : "+responseCode);
+
+                        BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+                        String inputLine;
+                        StringBuilder response = new StringBuilder();
+
+                        while((inputLine = in.readLine()) != null){
+                            response.append(inputLine);
+                        }
+                        in.close();
+                        System.out.println("Réponse : "+response.toString());
+                        con.disconnect();
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                }
+            });
+            thread.start();
+
+
+
+            System.out.println(nom+" "+sport+" "+adresse+" "+nbPlace+" "+date.getTime()+" "+heure+":"+minute);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 
     // pour accéder au local host du serveur web
     // http://10.0.2.2:8080/home

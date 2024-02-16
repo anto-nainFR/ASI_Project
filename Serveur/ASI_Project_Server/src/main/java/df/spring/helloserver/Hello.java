@@ -2,9 +2,7 @@ package df.spring.helloserver;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.data.repository.query.Param;
-import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
+
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,10 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.List;
-import java.util.Optional;
+import java.sql.Timestamp;
+import java.util.*;
 
 @RequestMapping("/home")
 @RestController
@@ -36,12 +32,33 @@ public class Hello {
         return FileCopyUtils.copyToString(reader);
     }
 
-
+    private final CoursRepository coursRepository;
     private final UtilisateurRepository utilisateurRepository;
 
     @Autowired
-    public Hello(UtilisateurRepository utilisateurRepository) {
+    public Hello(CoursRepository coursRepository, UtilisateurRepository utilisateurRepository) {
+        this.coursRepository = coursRepository;
         this.utilisateurRepository = utilisateurRepository;
+    }
+
+    @GetMapping("/ajout/{nom}/{sport}/{adresse}/{nbPlace}/{date}/{idUser}")
+    public void ajoutPage(@PathVariable String nom, @PathVariable String sport, @PathVariable String adresse, @PathVariable int nbPlace, @PathVariable long date, @PathVariable int idUser) throws IOException {
+
+        //localhost:8080/home/ajout/Coucou/test/prout/10/1708096260000/2
+        try{
+            Optional<Utilisateur> utilisateurOptional = utilisateurRepository.findById(idUser);
+            Utilisateur user = null;
+            if (utilisateurOptional.isPresent())
+                user = utilisateurOptional.get();
+
+            GregorianCalendar calendar = new GregorianCalendar();
+            calendar.setTime(new Date(date));
+            coursRepository.save(new Cours(calendar,nom,sport,adresse,nbPlace,user));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+
     }
 
 /*

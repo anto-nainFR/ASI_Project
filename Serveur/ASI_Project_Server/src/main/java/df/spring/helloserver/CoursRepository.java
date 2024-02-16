@@ -15,5 +15,4 @@ public interface CoursRepository extends JpaRepository<Cours,Integer> {
     Cours findBySport(@Param("sport") String sport);
     List<Cours> findByProfId(@Param("id") int id);
     // http://localhost:8080/cours/search/findByProfId?id=2
-
 }

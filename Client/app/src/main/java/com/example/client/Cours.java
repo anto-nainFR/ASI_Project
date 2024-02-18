@@ -1,28 +1,12 @@
-package df.spring.helloserver;
+package com.example.client;
 
-import jakarta.persistence.*;
-import java.util.Date;
-
-
-@Entity
 public class Cours {
-
-    private static int cpt = 3;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    @Column(nullable = false)
     private long date;
-    @Column(nullable = false)
     private String nom;
-    @Column(nullable = false)
     private String sport;
-    @Column(nullable = false)
     private String lieu;
-    @Column(nullable = false)
     private int nbPlace;
-    @ManyToOne(optional = false)
     private Utilisateur prof;
 
     public Cours(){}
@@ -37,7 +21,6 @@ public class Cours {
         this.prof = prof;
     }
     public Cours(long date, String nom, String sport, String lieu, int nbPlace, Utilisateur prof) {
-        this.id = cpt++;
         this.date = date;
         this.nom = nom;
         this.sport = sport;
@@ -104,18 +87,14 @@ public class Cours {
 
     @Override
     public String toString() {
-        Date d = new Date(date);
         return "Cours{" +
                 "id=" + id +
-                ", date=" + d.toString() +
+                ", date=" + date +
                 ", nom='" + nom + '\'' +
                 ", sport='" + sport + '\'' +
                 ", lieu='" + lieu + '\'' +
                 ", nbPlace=" + nbPlace +
-                ", prof=" + prof.toString() +
+                ", prof=" + prof +
                 '}';
     }
-
 }
-
-

@@ -1,5 +1,6 @@
 package df.spring.helloserver;
 
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 
@@ -11,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.sql.Timestamp;
 import java.util.*;
 
 @RequestMapping("/home")
@@ -34,31 +34,58 @@ public class Hello {
 
     private final CoursRepository coursRepository;
     private final UtilisateurRepository utilisateurRepository;
+    private final InscriptionRepository inscRepository;
 
     @Autowired
-    public Hello(CoursRepository coursRepository, UtilisateurRepository utilisateurRepository) {
+    public Hello(CoursRepository coursRepository, UtilisateurRepository utilisateurRepository, InscriptionRepository inscRepository) {
         this.coursRepository = coursRepository;
         this.utilisateurRepository = utilisateurRepository;
+        this.inscRepository = inscRepository;
     }
 
     @GetMapping("/ajout/{nom}/{sport}/{adresse}/{nbPlace}/{date}/{idUser}")
     public void ajoutPage(@PathVariable String nom, @PathVariable String sport, @PathVariable String adresse, @PathVariable int nbPlace, @PathVariable long date, @PathVariable int idUser) throws IOException {
 
-        //localhost:8080/home/ajout/Coucou/test/prout/10/1708096260000/2
         try{
             Optional<Utilisateur> utilisateurOptional = utilisateurRepository.findById(idUser);
             Utilisateur user = null;
             if (utilisateurOptional.isPresent())
                 user = utilisateurOptional.get();
 
-            GregorianCalendar calendar = new GregorianCalendar();
-            calendar.setTime(new Date(date));
-            coursRepository.save(new Cours(calendar,nom,sport,adresse,nbPlace,user));
+            coursRepository.save(new Cours(date,nom,sport,adresse,nbPlace,user));
         }catch (Exception e){
             e.printStackTrace();
         }
+    }
 
+    @GetMapping("/ajout/{idcours}/{iduser}/")
+    public void ajoutInscription(@PathVariable int idcours, @PathVariable int iduser) throws IOException {
 
+        try{
+            inscRepository.save(new Inscription(iduser,idcours));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+    @Transactional
+    @GetMapping("/remove/{idcours}/{iduser}/")
+    public void removeInscription(@PathVariable int idcours, @PathVariable int iduser) throws IOException {
+
+        try{
+            inscRepository.removeByIduserAndIdcours(iduser,idcours);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+    @Transactional
+    @GetMapping("/remove/{idcours}/")
+    public void removeCours(@PathVariable int idcours) throws IOException {
+
+        try{
+            coursRepository.removeById(idcours);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
 /*

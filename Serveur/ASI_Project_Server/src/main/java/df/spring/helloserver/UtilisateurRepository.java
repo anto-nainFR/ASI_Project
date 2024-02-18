@@ -13,6 +13,4 @@ public interface UtilisateurRepository extends JpaRepository<Utilisateur,Integer
     List<Utilisateur> findByNom(@Param("nom") String nom);
     List<Utilisateur> findByMailAndPassword(@Param("mail") String mail, @Param("password") String password);
     //http://localhost:8080/utilisateurs/search/findByMailAndPassword?mail=Antonin@gmail.com&password=password
-
-
 }

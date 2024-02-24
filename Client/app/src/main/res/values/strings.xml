@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">Client</string>
-    <string name="TitreMainPage">Titre / Nom de l\'application / du club</string>
-    <string name="descriptionMainPage">Description de l\'application (bla bla)</string>
+    <string name="TitreMainPage">Celcat Sportif</string>
+    <string name="descriptionMainPage">Agenda sportif permettant de proposer des cours ainsi que de s\'incrire à certains cours</string>
 </resources>

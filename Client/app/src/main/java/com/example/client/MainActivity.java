@@ -29,6 +29,8 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -58,6 +60,18 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
+    private static String bytesToHex(byte[] hash) {
+        StringBuilder hexString = new StringBuilder(2 * hash.length);
+        for (int i = 0; i < hash.length; i++) {
+            String hex = Integer.toHexString(0xff & hash[i]);
+            if(hex.length() == 1) {
+                hexString.append('0');
+            }
+            hexString.append(hex);
+        }
+        return hexString.toString();
+    }
+
     public void seConnecterAccueil(View view){
         setContentView(R.layout.connexion);
         if (login == null){
@@ -81,9 +95,10 @@ public class MainActivity extends AppCompatActivity {
                     String log = login.getText().toString();
                     String mdp = password.getText().toString();
 
-                    System.out.println(log + " " + mdp);
+                    MessageDigest digest = MessageDigest.getInstance("SHA-256");
+                    byte[] encodedhash = digest.digest(mdp.getBytes(StandardCharsets.UTF_8));
 
-                    String url = "http://10.0.2.2:8080/utilisateurs/search/findByMailAndPassword?mail="+log+"&password="+mdp+"\n";
+                    String url = "http://10.0.2.2:8080/utilisateurs/search/findByMailAndPassword?mail="+log+"&password="+bytesToHex(encodedhash)+"\n";
                     URL obj = new URL(url);
                     HttpURLConnection con  =(HttpURLConnection) obj.openConnection();
                     con.setRequestMethod("GET");
@@ -127,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }catch (IOException e){
                     e.printStackTrace();
-                }
+                }catch (Exception e){}
             }
         });
         thread.start();
@@ -142,10 +157,12 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     String log = login.getText().toString();
                     String mdp = password.getText().toString();
+                    MessageDigest digest = MessageDigest.getInstance("SHA-256");
+                    byte[] encodedhash = digest.digest(mdp.getBytes(StandardCharsets.UTF_8));
 
                     System.out.println(log + " " + mdp);
 
-                    String url = "http://10.0.2.2:8080/utilisateurs/search/findByMailAndPassword?mail="+log+"&password="+mdp+"\n";
+                    String url = "http://10.0.2.2:8080/utilisateurs/search/findByMailAndPassword?mail="+log+"&password="+bytesToHex(encodedhash)+"\n";
                     URL obj = new URL(url);
                     HttpURLConnection con  =(HttpURLConnection) obj.openConnection();
                     con.setRequestMethod("GET");
@@ -191,7 +208,7 @@ public class MainActivity extends AppCompatActivity {
 
                 }catch (IOException e){
                     e.printStackTrace();
-                }
+                }catch (Exception e){}
             }
         });
         thread.start();
@@ -227,7 +244,6 @@ public class MainActivity extends AppCompatActivity {
             tmp.setText("Statut : Professeur et élève");
         else
             tmp.setText("Statut : Élève");
-
 
         flag = 1;
     }
@@ -282,6 +298,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void ajoutCoursPage(View view){
         setContentView(R.layout.ajout_cours);
+
         eText=(EditText) findViewById(R.id.editText5);
         eText.setInputType(InputType.TYPE_NULL);
         eText.setOnClickListener(new View.OnClickListener() {
@@ -373,8 +390,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
             thread.start();
-
-
 
             System.out.println(nom+" "+sport+" "+adresse+" "+nbPlace+" "+date.getTime()+" "+heure+":"+minute);
         }catch (Exception e){
@@ -513,6 +528,7 @@ public class MainActivity extends AppCompatActivity {
                             LinearLayout lr = findViewById(R.id.lr);
                             TextView tv;
                             int cpt = 0;
+
                             for (Cours cours : array) {
                                 tv = new TextView(main);
                                 RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams((int) RelativeLayout.LayoutParams.MATCH_PARENT,(int) RelativeLayout.LayoutParams.WRAP_CONTENT);
@@ -714,6 +730,9 @@ public class MainActivity extends AppCompatActivity {
                                         tmp = findViewById(R.id.textView17);
                                         tmp.setText("Nombre de place : "+cours.getNbPlace());
 
+                                        Button btn = findViewById(R.id.supprimerCours);
+                                        btn.setVisibility(View.INVISIBLE);
+
                                         Thread thread = new Thread(new Runnable() {
                                             @Override
                                             public void run() {
@@ -906,6 +925,9 @@ public class MainActivity extends AppCompatActivity {
 
                                         tmp = findViewById(R.id.textView18);
                                         tmp.setVisibility(View.INVISIBLE);
+
+                                        Button btn = findViewById(R.id.supprimerCours);
+                                        btn.setVisibility(View.INVISIBLE);
 
                                     }
                                 });
